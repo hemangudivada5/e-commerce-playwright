@@ -23,7 +23,9 @@ export class ProductCard {
   async addToCart(): Promise<void> {
     await this.addToCartButton.click();
   }
-  
+  async openDetails(): Promise<void> {
+  await this.productName.click();
+}
 }
 
 

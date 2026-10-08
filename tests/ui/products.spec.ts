@@ -3,11 +3,13 @@ import { LoginPage } from '../../pages/LoginPage';
 import { ProductsPage } from '../../pages/ProductsPage';
 import { users } from '../../test-data/users';
 import { CartPage } from '../../pages/CartPage';
+import { ProductDetailsPage } from '../../pages/ProductDetailsPage';
 
 test('user should be able to view and add a product to the cart', async ({page})=>{
     const loginPage = new LoginPage(page);
     const productsPage = new ProductsPage(page);
     const cartPage = new CartPage(page);
+    
 
     await loginPage.open();
     await loginPage.login(users.validUser.username, users.validUser.password);
@@ -78,6 +80,7 @@ test('user should be able to sort products by name A-Z', async ({ page }) => {
 test('user should be able to sort products by name Z to A', async ({ page }) => {
   const loginPage = new LoginPage(page);
   const productsPage = new ProductsPage(page);
+  const productDetailsPage = new ProductDetailsPage(page);
 
   await loginPage.open();
 
@@ -90,4 +93,16 @@ test('user should be able to sort products by name Z to A', async ({ page }) => 
   const sortedNames = [...productNames].sort((a, b) =>b.localeCompare(a));
 
   expect(productNames).toEqual(sortedNames);
+  const backpack = await productsPage.getProductCard('Sauce Labs Backpack');
+
+  await backpack.openDetails();
+  
+  expect(await productDetailsPage.getName()).toBe('Sauce Labs Backpack');
+  expect(await productDetailsPage.getDescription()).toBe(
+  'carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.'
+);
+expect(await productDetailsPage.getPrice()).toBe('$29.99');
+await productDetailsPage.goBackToProducts();
+
+await expect(page).toHaveURL(/inventory/);
 });
