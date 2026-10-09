@@ -106,3 +106,91 @@ await productDetailsPage.goBackToProducts();
 
 await expect(page).toHaveURL(/inventory/);
 });
+test('user should be able to add multiple products to cart', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const productsPage = new ProductsPage(page);
+  const cartPage = new CartPage(page);
+
+  await loginPage.open();
+
+  await loginPage.login(users.validUser.username,users.validUser.password);
+
+  const backpack = await productsPage.getProductCard('Sauce Labs Backpack');
+
+  const bikeLight = await productsPage.getProductCard('Sauce Labs Bike Light');
+
+  await backpack.addToCart();
+  await bikeLight.addToCart();
+
+  expect(await productsPage.getCartItemCount()).toBe(2);
+
+  await productsPage.openCart();
+
+  expect(await cartPage.getProductName('Sauce Labs Backpack')).toBe('Sauce Labs Backpack');
+
+  expect(await cartPage.getProductName('Sauce Labs Bike Light')).toBe('Sauce Labs Bike Light');
+  expect(await cartPage.getProductQuantity('Sauce Labs Backpack')).toBe(1);
+expect(await cartPage.getProductQuantity('Sauce Labs Bike Light')).toBe(1);
+});
+test('user should be able to remove one product and keep the other', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const productsPage = new ProductsPage(page);
+  const cartPage = new CartPage(page);
+
+  await loginPage.open();
+
+  await loginPage.login(users.validUser.username,users.validUser.password);
+
+  const backpack = await productsPage.getProductCard('Sauce Labs Backpack');
+
+  const bikeLight = await productsPage.getProductCard('Sauce Labs Bike Light');
+
+  await backpack.addToCart();
+  await bikeLight.addToCart();
+
+  expect(await productsPage.getCartItemCount()).toBe(2);
+
+  await productsPage.openCart();
+
+  await cartPage.removeProduct('Sauce Labs Backpack');
+
+  expect(await cartPage.getCartItemCount()).toBe(1);
+
+  expect(await cartPage.getProductName('Sauce Labs Bike Light')).toBe('Sauce Labs Bike Light');
+});
+test('user should be able to continue shopping from cart', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const productsPage = new ProductsPage(page);
+  const cartPage = new CartPage(page);
+
+  await loginPage.open();
+
+  await loginPage.login(users.validUser.username,users.validUser.password);
+
+  const backpack = await productsPage.getProductCard('Sauce Labs Backpack');
+
+  await backpack.addToCart();
+  await productsPage.openCart();
+
+  await cartPage.continueShopping();
+
+  await expect(page).toHaveURL(/inventory/);
+});
+test('user should be able to proceed to checkout from cart', async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const productsPage = new ProductsPage(page);
+  const cartPage = new CartPage(page);
+
+  await loginPage.open();
+
+  await loginPage.login(users.validUser.username,users.validUser.password);
+
+  const backpack = await productsPage.getProductCard('Sauce Labs Backpack');
+
+  await backpack.addToCart();
+  await productsPage.openCart();
+
+  await cartPage.proceedToCheckout();
+
+  await expect(page).toHaveURL(/checkout-step-one\.html/);
+});

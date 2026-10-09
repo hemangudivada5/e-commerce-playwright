@@ -40,4 +40,14 @@ async getCartItemCount(): Promise<number> {
 async proceedToCheckout(): Promise<void> {
   await this.checkoutButton.click();
 }
+async continueShopping(): Promise<void> {
+  await this.continueShoppingButton.click();
+}
+async getProductQuantity(productName: string): Promise<number> {
+  const cartItem = await this.getCartItem(productName);
+
+  const quantity = await cartItem.locator('[data-test="item-quantity"]').textContent();
+
+  return Number(quantity?.trim() ?? 0);
+}
 }
