@@ -86,7 +86,7 @@ e-commerce-playwright/
 Clone the GitHub repository:
 
 ```bash
-git clone <your-github-repository-url>
+git clone https://github.com/hemangudivada5/e-commerce-playwright
 cd e-commerce-playwright
 ```
 
