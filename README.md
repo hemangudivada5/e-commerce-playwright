@@ -3,9 +3,11 @@
 
 ## Overview
 
-An end-to-end test automation framework built with Playwright and TypeScript to validate essential shopping journeys on the SauceDemo web application.
 
-The project demonstrates maintainable test automation using the Page Object Model (POM), reusable components, custom Playwright fixtures, centralized test data, and automated test reporting.
+An end-to-end automation framework built with Playwright and TypeScript. It validates shopping journeys on SauceDemo and product discovery workflows on Automation Exercise.
+
+The project demonstrates maintainable test automation using the Page Object Model (POM), reusable components, custom Playwright fixtures, centralized test data, product search, category and brand navigation, checkout validation, and automated test reporting.
+
 
 ## Technology Stack
 
@@ -38,6 +40,14 @@ The project demonstrates maintainable test automation using the Page Object Mode
 - Verify products, subtotal, tax, and total.
 - Complete an order and verify the confirmation message.
 
+### Product Discovery — Automation Exercise
+- Search for products by name and validate matching results.
+- Navigate to the Dress category and verify displayed products.
+- Select the Polo brand and verify brand-specific products.
+- Use a dedicated `ProductDiscoveryPage` Page Object.
+- Keep product-discovery tests separate from the SauceDemo shopping workflows.
+
+
 ### Framework Design
 - Page Object Model for page-level interactions.
 - Reusable `ProductCard` component.
@@ -47,33 +57,42 @@ The project demonstrates maintainable test automation using the Page Object Mode
 - Chromium-based test execution.
 - HTML reporting and failure-focused debugging artifacts.
 
+
 ## Project Structure
 
 ```text
 e-commerce-playwright/
-├── components/
-│   └── ProductCard.ts
-├── fixtures/
-│   └── test-fixtures.ts
-├── pages/
-│   ├── LoginPage.ts
-│   ├── ProductsPage.ts
-│   ├── ProductDetailsPage.ts
-│   ├── CartPage.ts
-│   ├── CheckoutPage.ts
-│   ├── CheckoutOverviewPage.ts
-│   └── OrderConfirmationPage.ts
-├── test-data/
-│   └── users.ts
-├── tests/
-│   └── ui/
-│       ├── login.spec.ts
-│       ├── products.spec.ts
-│       └── checkout.spec.ts
-├── playwright.config.ts
-├── package.json
-└── README.md
+|-- components/
+|   `-- ProductCard.ts
+|-- config/
+|-- fixtures/
+|   `-- test-fixtures.ts
+|-- pages/
+|   |-- LoginPage.ts
+|   |-- ProductsPage.ts
+|   |-- ProductDetailsPage.ts
+|   |-- CartPage.ts
+|   |-- CheckoutPage.ts
+|   |-- CheckoutOverviewPage.ts
+|   |-- OrderConfirmationPage.ts
+|   `-- ProductDiscoveryPage.ts
+|-- test-data/
+|   `-- users.ts
+|-- tests/
+|   `-- ui/
+|       |-- login.spec.ts
+|       |-- products.spec.ts
+|       |-- checkout.spec.ts
+|       `-- product-discovery.spec.ts
+|-- utils/
+|-- reports/
+|-- scripts/
+|-- playwright.config.ts
+|-- package.json
+|-- package-lock.json
+`-- README.md
 ```
+
 
 ## Prerequisites
 
@@ -128,6 +147,14 @@ Run checkout tests only:
 npx playwright test tests/ui/checkout.spec.ts --project=chromium
 ```
 
+### Run Product Discovery Tests
+
+Tests product search, category selection, and brand selection on Automation Exercise.
+
+```bash
+npx playwright test tests/ui/product-discovery.spec.ts --project=chromium
+```
+
 ## Test Reports
 
 Generate the report by running the test suite:
@@ -144,9 +171,13 @@ npx playwright show-report
 
 Screenshots, traces, and videos can help investigate failures according to the project's Playwright configuration.
 
-## Application Under Test
 
-[SauceDemo](https://www.saucedemo.com/)
+## Applications Under Test
+
+- [SauceDemo](https://www.saucedemo.com/) — login, product details, cart, checkout, and order placement.
+- [Automation Exercise](https://www.automationexercise.com/products) — product search, category navigation, and brand selection.
+
+
 
 ## Future Enhancements
 
