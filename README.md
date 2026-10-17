@@ -56,7 +56,8 @@ The project demonstrates maintainable test automation using the Page Object Mode
 - Custom Playwright fixtures for sharing Page Objects.
 - Centralized login test data.
 - Shared login setup using `beforeEach` in product and checkout test suites.
-- Chromium-based test execution.
+- Cross-browser execution using Chromium, Firefox, and WebKit.
+- Parallel test execution with configurable worker counts.
 - HTML reporting and failure-focused debugging artifacts.
 
 
@@ -120,7 +121,7 @@ npm install
 Install the Chromium browser:
 
 ```bash
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 ```
 
 ## Run Tests
@@ -128,7 +129,10 @@ npx playwright install chromium
 Run the complete test suite:
 
 ```bash
+npx playwright test --workers=2
 npx playwright test --project=chromium
+npx playwright test --project=firefox
+npx playwright test --project=webkit
 ```
 
 Run login tests only:

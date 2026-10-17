@@ -83,7 +83,7 @@ test('user should be able to sort products by name Z to A', async ({
 
   const backpack = await productsPage.getProductCard('Sauce Labs Backpack');
   await backpack.openDetails();
-
+await expect(page).toHaveURL(/inventory-item\.html/);
   expect(await productDetailsPage.getName()).toBe('Sauce Labs Backpack');
 
   expect(await productDetailsPage.getDescription()).toBe(

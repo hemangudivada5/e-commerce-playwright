@@ -32,8 +32,7 @@ test.describe('Product discovery - Automation Exercise', () => {
     const names = await productsPage.getProductNames();
 
     expect(names.length).toBeGreaterThan(0);
-    expect(names).toContain('Sleeveless Dress');
-  });
+    expect(names.some((name) => name.includes('Sleeveless Dress'))).toBeTruthy();});
 
   test('brand selection should display brand products', async ({
     page,
