@@ -52,4 +52,24 @@ test.describe('Product discovery - Automation Exercise', () => {
     expect(names.length).toBeGreaterThan(0);
     expect(names).toContain('Blue Top');
   });
+test('search should return no products for an unmatched term', async ({
+  page,
+}) => {
+  const productsPage = new ProductDiscoveryPage(page);
+
+  await productsPage.open();
+
+  const unmatchedTerm = `no-such-product-${Date.now()}`;
+
+  await productsPage.searchForProduct(unmatchedTerm);
+
+  await expect(
+    productsPage.searchedProductsHeading
+  ).toBeVisible();
+
+  const names = await productsPage.getProductNames();
+
+  expect(names).toHaveLength(0);
+});
+
 });

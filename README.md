@@ -22,6 +22,8 @@ The project demonstrates maintainable test automation using the Page Object Mode
 ### Login Testing
 - Validate successful login with valid credentials.
 - Verify error handling for invalid credentials.
+- Verify that a locked-out user cannot log in and receives the expected error message.
+
 
 ### Product Testing
 - Verify product names, descriptions, and prices.
@@ -46,7 +48,7 @@ The project demonstrates maintainable test automation using the Page Object Mode
 - Select the Polo brand and verify brand-specific products.
 - Use a dedicated `ProductDiscoveryPage` Page Object.
 - Keep product-discovery tests separate from the SauceDemo shopping workflows.
-
+- Verify that a search with no matching products returns an empty product list.
 
 ### Framework Design
 - Page Object Model for page-level interactions.
