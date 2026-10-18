@@ -1,10 +1,17 @@
-
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../../fixtures/test-fixtures';
 import { ProductDiscoveryPage } from '../../pages/ProductDiscoveryPage';
+test.beforeEach(async ({ page }) => {
+  await page.route('https://pagead2.googlesyndication.com/**',
+    (route) => route.abort()
+  );
 
+  await page.route('https://googleads.g.doubleclick.net/**',
+    (route) => route.abort()
+  );
+});
 test.describe('Product discovery - Automation Exercise', () => {
-  test('search should display matching products', async ({ page }) => {
-    const productsPage = new ProductDiscoveryPage(page);
+  test('search should display matching products', async ({ page, productDiscoveryPage  }) => {
+    const productsPage = productDiscoveryPage;
 
     await productsPage.open();
     await productsPage.searchForProduct('Blue Top');
@@ -18,9 +25,9 @@ test.describe('Product discovery - Automation Exercise', () => {
   });
 
   test('category selection should display category products', async ({
-    page,
+    page, productDiscoveryPage 
   }) => {
-    const productsPage = new ProductDiscoveryPage(page);
+    const productsPage = productDiscoveryPage;
 
     await productsPage.open();
     await productsPage.selectCategory('/category_products/1');
@@ -35,9 +42,9 @@ test.describe('Product discovery - Automation Exercise', () => {
     expect(names.some((name) => name.includes('Sleeveless Dress'))).toBeTruthy();});
 
   test('brand selection should display brand products', async ({
-    page,
+    page, productDiscoveryPage
   }) => {
-    const productsPage = new ProductDiscoveryPage(page);
+    const productsPage = productDiscoveryPage;
 
     await productsPage.open();
     await productsPage.selectBrand('Polo');
@@ -52,9 +59,9 @@ test.describe('Product discovery - Automation Exercise', () => {
     expect(names).toContain('Blue Top');
   });
 test('search should return no products for an unmatched term', async ({
-  page,
+  page, productDiscoveryPage 
 }) => {
-  const productsPage = new ProductDiscoveryPage(page);
+  const productsPage = productDiscoveryPage;
 
   await productsPage.open();
 

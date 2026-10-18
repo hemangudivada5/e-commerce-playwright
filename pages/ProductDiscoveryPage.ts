@@ -1,6 +1,7 @@
 
 import { Page, Locator } from '@playwright/test';
 
+
 type CategoryPath =
   | '/category_products/1'
   | '/category_products/2';

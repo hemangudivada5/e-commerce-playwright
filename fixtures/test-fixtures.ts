@@ -8,6 +8,7 @@ import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { CheckoutOverviewPage } from '../pages/CheckoutOverviewPage';
 import { OrderConfirmationPage } from '../pages/OrderConfirmationPage';
+import { ProductDiscoveryPage } from '../pages/ProductDiscoveryPage';
 
 type AppFixtures = {
   loginPage: LoginPage;
@@ -17,6 +18,7 @@ type AppFixtures = {
   checkoutPage: CheckoutPage;
   checkoutOverviewPage: CheckoutOverviewPage;
   orderConfirmationPage: OrderConfirmationPage;
+  productDiscoveryPage: ProductDiscoveryPage;
 };
 
 export const test = base.extend<AppFixtures>({
@@ -47,6 +49,9 @@ export const test = base.extend<AppFixtures>({
   orderConfirmationPage: async ({ page }, use) => {
     await use(new OrderConfirmationPage(page));
   },
+  productDiscoveryPage: async ({ page }, use) => {
+  await use(new ProductDiscoveryPage(page));
+},
 });
 
 export { expect };
